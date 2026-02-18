@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Cyber Saffron</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="services.css">
+</head>
+
+<body>
+
+    <!-- Top navbar -->
+    <header class="top-navbar">
+        <div class="nav-container">
+            <nav class="top-navbar">
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html" class="active">Services</a></li>
+                    <li><a href="industries.html">Industries</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="services-header">
+
+            <h1>Our <span>Services</span></h1>
+            <p>We deliver secure, scalable, and result-driven digital solutions for modern businesses.</p>
+        </div>
+
+
+        <div class="services-grid">
+            <a href="website-development.html" class="service-card">
+                <h3>Website Development</h3>
+                <p>Modern, responsive, and high-performance websites tailored to your business goals.</p>
+            </a>
+
+            <a href="web-application-development.html" class="service-card">
+                <h3>Web Application Development</h3>
+                <p>Custom web applications built with scalability, security, and performance in mind.</p>
+            </a>
+
+            <a href="cybersecurity-solutions.html" class="service-card">
+                <h3>Cybersecurity Solutions</h3>
+                <p>Protect your digital assets with vulnerability testing, monitoring, and security best practices.</p>
+            </a>
+
+            <a href="it-consulting.html" class="service-card">
+                <h3>IT Consulting</h3>
+                <p>Expert guidance to help you choose the right technology and infrastructure.</p>
+            </a>
+
+            <a href="website-maintenance.html" class="service-card">
+                <h3>Website Maintenance</h3>
+                <p>Ongoing updates, backups, performance optimization, and technical support.</p>
+            </a>
+
+            <a href="digital-strategy.html" class="service-card">
+                <h3>Digital Strategy</h3>
+                <p>Smart digital planning to grow your brand, traffic, and conversions.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- JavaScript for Search Redirect -->
+    <script>
+        function searchService() {
+            const query = document.getElementById('service-search').value.toLowerCase().trim();
+
+            // Map of service keywords to their pages
+            const services = {
+                "website development": "website-development.html",
+                "web application development": "web-application-development.html",
+                "cybersecurity solutions": "cybersecurity-solutions.html",
+                "it consulting": "it-consulting.html",
+                "website maintenance": "website-maintenance.html",
+                "digital strategy": "digital-strategy.html"
+            };
+
+            // Redirect if match found
+            if (services[query]) {
+                window.location.href = services[query];
+            } else {
+                alert("Service not found. Please try again.");
+            }
+        }
+
+        // Optional: Allow Enter key to trigger search
+        document.getElementById('service-search').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchService();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

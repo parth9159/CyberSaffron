@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industries - Cyber Saffron</title>
+    <link rel="stylesheet" href="Home.css">
+    <link rel="stylesheet" href="industries.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Top navbar -->
+    <header class="top-navbar">
+        <div class="nav-container">
+            <nav class="top-navbar">
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="industries.html" class="active">Industries</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="services">
+        <div class="services-header">
+
+            <h1>Industries <span>We Serve</span></h1>
+            <p>Cyber Saffron delivers secure, scalable, and high-performance digital solutions across diverse industries worldwide.</p>
+        </div>
+
+        <!-- Industries Grid -->
+        <div class="services-grid">
+            <a href="#" class="service-card">
+                <h3>🏨 Hospitality & Hotels</h3>
+                <p>Hotel websites, booking engines, branding & digital presence</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🏥 Healthcare</h3>
+                <p>Clinic systems, appointment platforms & secure healthcare solutions</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🏫 Education & Training</h3>
+                <p>LMS platforms, coaching websites & e-learning systems</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🏢 Real Estate</h3>
+                <p>Property listings, CRM systems & lead generation portals</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🛒 E-Commerce</h3>
+                <p>Online stores, payment gateways & scalable shopping platforms</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🎮 Gaming & Esports</h3>
+                <p>Gaming agency websites, landing pages & community portals</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🚗 Automotive</h3>
+                <p>Dealer websites, service booking & product showcases</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🍔 Food & Restaurants</h3>
+                <p>Online menus, ordering systems & restaurant branding</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🏗️ Construction</h3>
+                <p>Company profiles, project portfolios & infrastructure showcases</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>💰 Finance & Insurance</h3>
+                <p>Secure, compliance-ready platforms & dashboards</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>💼 Corporate & Startups</h3>
+                <p>Business websites, SaaS platforms & enterprise solutions</p>
+            </a>
+
+            <a href="#" class="service-card">
+                <h3>🧑‍💻 IT & Technology</h3>
+                <p>Tech portals, dashboards & custom software solutions</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- JavaScript for Search -->
+    <script>
+        function searchIndustry() {
+            const query = document.getElementById('industry-search').value.toLowerCase().trim();
+
+            const industries = {
+                "hospitality": "#",
+                "healthcare": "#",
+                "education": "#",
+                "real estate": "#",
+                "e-commerce": "#",
+                "gaming": "#",
+                "automotive": "#",
+                "food": "#",
+                "construction": "#",
+                "finance": "#",
+                "corporate": "#",
+                "it": "#"
+            };
+
+            if (industries[query]) {
+                window.location.href = industries[query];
+            } else {
+                alert("Industry not found. Please try again.");
+            }
+        }
+
+        document.getElementById('industry-search').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchIndustry();
+        });
+    </script>
+    <!-- Footer -->
+
+
+</body>
+
+</html>
