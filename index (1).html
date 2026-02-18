@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cyber Saffron | Web Development Solutions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cyber Saffron - We build secure, scalable, and modern digital solutions for startups and businesses.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #5aa9ff;
+            --accent2: #7fc3ff;
+            --accent-hover: #69c6ff;
+            --btn: #3bb4ff;
+            --text: #e6eef9;
+            --text-muted: #cfdfff;
+            --bg-start: #1a0530;
+            --bg-mid: #2f0750;
+            --bg-end: #4a0f6a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-mid) 40%, var(--bg-end) 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ─────────────────────────────
+           NAVBAR
+        ───────────────────────────── */
+        .top-navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            background: rgba(26, 5, 48, 0.6);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(90, 169, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .top-navbar.scrolled {
+            background: rgba(26, 5, 48, 0.92);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 16px clamp(20px, 5%, 60px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--accent2);
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            gap: clamp(18px, 2.5vw, 36px);
+        }
+
+        .menu li a {
+            text-decoration: none;
+            font-size: clamp(13px, 1.3vw, 16px);
+            color: var(--text);
+            font-weight: 400;
+            transition: color 0.3s;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .menu li a::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 0; height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .menu li a:hover,
+        .menu li a.active { color: var(--accent-hover); }
+        .menu li a:hover::after,
+        .menu li a.active::after { width: 100%; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px; height: 2px;
+            background: #cfcfff;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 60px; left: 0;
+            width: 100%;
+            background: rgba(26, 5, 48, 0.97);
+            flex-direction: column;
+            z-index: 999;
+            padding: 8px 0 20px;
+            border-bottom: 1px solid rgba(90,169,255,0.12);
+        }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 16px;
+            padding: 14px 24px;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        .mobile-nav a:hover,
+        .mobile-nav a.active { color: var(--accent-hover); }
+
+        /* ─────────────────────────────
+           SCROLL REVEAL
+        ───────────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ─────────────────────────────
+           SECTION SHARED
+        ───────────────────────────── */
+        .section-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: clamp(60px, 10vh, 120px) clamp(20px, 5%, 60px);
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 50px;
+            background: rgba(90, 169, 255, 0.12);
+            border: 1px solid rgba(90, 169, 255, 0.25);
+            font-size: clamp(11px, 1vw, 13px);
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: clamp(14px, 2vh, 22px);
+            letter-spacing: 0.5px;
+        }
+
+        .section-title {
+            font-size: clamp(26px, 3.5vw, 42px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: clamp(12px, 2vh, 20px);
+        }
+
+        .section-title span {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: clamp(14px, 1.4vw, 17px);
+            color: var(--text-muted);
+            line-height: 1.75;
+            max-width: 680px;
+            opacity: 0.88;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(90,169,255,0.2), transparent);
+            margin: 0;
+        }
+
+        /* ─────────────────────────────
+           HERO SECTION
+        ───────────────────────────── */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: clamp(40px, 8vh, 80px) clamp(20px, 5%, 60px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: clamp(30px, 5vw, 70px);
+            width: 100%;
+        }
+
+        .hero-left { flex: 1; max-width: 580px; }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: clamp(11px, 1vw, 13px);
+            font-weight: 500;
+            margin-bottom: clamp(16px, 2.5vh, 26px);
+            letter-spacing: 0.5px;
+        }
+
+        .hero-left h1 {
+            font-size: clamp(34px, 5vw, 60px);
+            font-weight: 700;
+            line-height: 1.12;
+            margin-bottom: clamp(10px, 1.5vh, 16px);
+        }
+
+        .hero-left h1 span {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-left h3 {
+            font-size: clamp(16px, 1.8vw, 22px);
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: clamp(12px, 1.5vh, 18px);
+        }
+
+        .hero-left p {
+            font-size: clamp(13px, 1.2vw, 16px);
+            opacity: 0.8;
+            line-height: 1.75;
+            margin-bottom: clamp(24px, 3.5vh, 36px);
+            max-width: 480px;
+        }
+
+        .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .primary-btn {
+            display: inline-block;
+            padding: clamp(11px, 1.5vh, 15px) clamp(24px, 2.5vw, 34px);
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #1a0530;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: clamp(13px, 1.2vw, 15px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 28px rgba(90, 169, 255, 0.38);
+            border: none;
+            cursor: pointer;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 38px rgba(90, 169, 255, 0.55);
+        }
+
+        .secondary-btn {
+            display: inline-block;
+            padding: clamp(11px, 1.5vh, 15px) clamp(24px, 2.5vw, 34px);
+            border-radius: 50px;
+            border: 1.5px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: clamp(13px, 1.2vw, 15px);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(90,169,255,0.12);
+        }
+
+        .hero-right {
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .hero-right img {
+            width: clamp(280px, 38vw, 520px);
+            border-radius: 24px;
+            box-shadow: 0 24px 70px rgba(0,0,0,0.5), 0 0 60px rgba(90,169,255,0.15);
+            display: block;
+        }
+
+        /* Floating glow behind image */
+        .hero-right::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(ellipse, rgba(90,169,255,0.2) 0%, transparent 70%);
+            pointer-events: none;
+            border-radius: 50%;
+            filter: blur(30px);
+        }
+
+        /* ─────────────────────────────
+           STATS BAR
+        ───────────────────────────── */
+        .stats-bar {
+            background: rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(90,169,255,0.1);
+            border-bottom: 1px solid rgba(90,169,255,0.1);
+        }
+
+        .stats-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: clamp(28px, 4vh, 40px) clamp(20px, 5%, 60px);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: clamp(20px, 3vw, 40px);
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .stat-item p {
+            font-size: clamp(12px, 1.1vw, 14px);
+            opacity: 0.7;
+        }
+
+        /* ─────────────────────────────
+           ABOUT SECTION
+        ───────────────────────────── */
+        #about .about-inner {
+            display: flex;
+            align-items: center;
+            gap: clamp(40px, 6vw, 80px);
+        }
+
+        .about-image-wrap {
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .about-image-wrap img {
+            width: clamp(240px, 30vw, 400px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        }
+
+        .about-image-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, rgba(90,169,255,0.3), transparent);
+            z-index: -1;
+        }
+
+        .about-text { flex: 1; }
+
+        .about-text .section-subtitle { margin-bottom: 28px; }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(12px, 2vw, 20px);
+            margin-top: clamp(20px, 3vh, 32px);
+        }
+
+        .value-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: clamp(16px, 2.5vh, 22px) clamp(14px, 2vw, 20px);
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-4px);
+            background: rgba(90,169,255,0.08);
+        }
+
+        .value-card .v-icon { font-size: 22px; margin-bottom: 8px; }
+        .value-card h4 { font-size: clamp(13px, 1.2vw, 15px); color: var(--accent-hover); margin-bottom: 6px; }
+        .value-card p { font-size: clamp(11px, 1vw, 13px); opacity: 0.72; line-height: 1.6; }
+
+        /* ─────────────────────────────
+           SERVICES SECTION
+        ───────────────────────────── */
+        #services { background: rgba(0,0,0,0.15); }
+
+        #services .section-wrapper { text-align: center; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(16px, 2.5vw, 28px);
+            margin-top: clamp(30px, 5vh, 50px);
+            text-align: left;
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: clamp(24px, 3.5vh, 34px) clamp(20px, 2.5vw, 28px);
+            transition: transform 0.3s, background 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            background: rgba(90,169,255,0.07);
+            border-color: rgba(90,169,255,0.25);
+        }
+
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-card .s-icon { font-size: clamp(30px, 3.5vw, 38px); margin-bottom: 14px; }
+        .service-card h3 { font-size: clamp(15px, 1.5vw, 18px); font-weight: 600; color: var(--accent-hover); margin-bottom: 10px; }
+        .service-card p { font-size: clamp(12px, 1.1vw, 14px); opacity: 0.75; line-height: 1.7; }
+
+        /* ─────────────────────────────
+           INDUSTRIES SECTION
+        ───────────────────────────── */
+        #industries .section-wrapper { text-align: center; }
+
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: clamp(14px, 2.2vw, 24px);
+            margin-top: clamp(30px, 5vh, 50px);
+            text-align: left;
+        }
+
+        .industry-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: clamp(20px, 3vh, 30px) clamp(18px, 2.2vw, 24px);
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-6px);
+            background: rgba(90,169,255,0.07);
+        }
+
+        .industry-card .i-icon { font-size: clamp(28px, 3.5vw, 36px); margin-bottom: 12px; }
+        .industry-card h3 { font-size: clamp(14px, 1.4vw, 17px); font-weight: 600; color: var(--accent-hover); margin-bottom: 8px; }
+        .industry-card p { font-size: clamp(11px, 1vw, 13px); opacity: 0.72; line-height: 1.65; }
+
+        /* ─────────────────────────────
+           CONTACT SECTION
+        ───────────────────────────── */
+        #contact { background: rgba(0,0,0,0.1); }
+
+        .contact-inner {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: clamp(40px, 6vw, 80px);
+            align-items: start;
+        }
+
+        .contact-info-col h2 { font-size: clamp(22px, 2.8vw, 34px); font-weight: 700; margin-bottom: 16px; }
+        .contact-info-col p { font-size: clamp(13px, 1.2vw, 15px); opacity: 0.8; line-height: 1.75; margin-bottom: 32px; }
+
+        .contact-items { display: flex; flex-direction: column; gap: 16px; }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 14px 18px;
+        }
+
+        .c-icon { font-size: 22px; }
+        .contact-item p { font-size: clamp(12px, 1.1vw, 14px); opacity: 0.8; margin: 0; }
+        .contact-item strong { display: block; font-size: clamp(11px, 1vw, 12px); color: var(--accent); margin-bottom: 2px; }
+
+        /* FORM */
+        .contact-form {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+            padding: clamp(28px, 4vh, 44px) clamp(24px, 3.5vw, 40px);
+            backdrop-filter: blur(8px);
+        }
+
+        .form-group { margin-bottom: clamp(16px, 2.5vh, 22px); }
+
+        .form-group label {
+            display: block;
+            font-size: clamp(11px, 1vw, 13px);
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: clamp(10px, 1.4vh, 14px) clamp(12px, 1.5vw, 16px);
+            border-radius: 12px;
+            border: 1px solid rgba(90,169,255,0.2);
+            background: rgba(255,255,255,0.06);
+            color: var(--text);
+            font-size: clamp(13px, 1.1vw, 15px);
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder { color: rgba(230,238,249,0.35); }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus,
+        .contact-form select:focus {
+            border-color: var(--accent);
+            background: rgba(90,169,255,0.05);
+        }
+
+        .contact-form select option { background: #2a004f; }
+        .contact-form textarea { resize: vertical; min-height: 120px; }
+
+        .submit-btn {
+            width: 100%;
+            padding: clamp(12px, 1.8vh, 16px) 24px;
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #1a0530;
+            font-size: clamp(14px, 1.3vw, 16px);
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 28px rgba(90,169,255,0.35);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 38px rgba(90,169,255,0.52);
+        }
+
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 14px;
+            border-radius: 12px;
+            background: rgba(90,169,255,0.1);
+            border: 1px solid rgba(90,169,255,0.3);
+            color: var(--accent-hover);
+            font-size: 14px;
+            margin-top: 14px;
+        }
+
+        .success-msg.show { display: block; }
+
+        /* ─────────────────────────────
+           FOOTER
+        ───────────────────────────── */
+        footer {
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding: clamp(30px, 5vh, 50px) clamp(20px, 5%, 60px);
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+            font-size: clamp(16px, 1.8vw, 20px);
+            color: var(--accent2);
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: clamp(16px, 2.5vw, 30px);
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            font-size: clamp(12px, 1.1vw, 14px);
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--accent-hover); }
+
+        .footer-copy {
+            width: 100%;
+            text-align: center;
+            font-size: clamp(11px, 1vw, 13px);
+            opacity: 0.5;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            margin-top: 24px;
+        }
+
+        /* Back to top */
+        .back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #1a0530;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(90,169,255,0.4);
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 900;
+        }
+
+        .back-top.show { display: flex; }
+        .back-top:hover { transform: translateY(-4px); }
+
+        /* ─────────────────────────────
+           RESPONSIVE
+        ───────────────────────────── */
+        @media (max-width: 900px) {
+            .menu { display: none; }
+            .hamburger { display: flex; }
+
+            .hero-inner {
+                flex-direction: column;
+                text-align: center;
+                padding-top: clamp(100px, 14vh, 130px);
+            }
+            .hero-left { max-width: 100%; }
+            .hero-left p { max-width: 100%; }
+            .hero-btns { justify-content: center; }
+            .hero-right img { width: clamp(260px, 70vw, 420px); }
+
+            #about .about-inner { flex-direction: column; text-align: center; }
+            .about-image-wrap img { width: clamp(220px, 60vw, 340px); }
+            .values-grid { grid-template-columns: 1fr; }
+
+            .contact-inner { grid-template-columns: 1fr; }
+            .contact-info-col { text-align: center; }
+            .contact-items { align-items: center; }
+            .contact-item { max-width: 400px; width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-inner { grid-template-columns: 1fr 1fr; }
+            .back-top { bottom: 16px; right: 16px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════
+         NAVBAR
+    ═══════════════════════════════════════ -->
+    <header class="top-navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-brand">Cyber Saffron</a>
+            <ul class="menu">
+                <li><a href="#home" class="active" data-section="home">Home</a></li>
+                <li><a href="#about" data-section="about">About</a></li>
+                <li><a href="#services" data-section="services">Services</a></li>
+                <li><a href="#industries" data-section="industries">Industries</a></li>
+                <li><a href="#contact" data-section="contact">Contact</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#industries">Industries</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         HOME / HERO
+    ═══════════════════════════════════════ -->
+    <section id="home">
+        <div class="hero-inner">
+            <div class="hero-left reveal-left">
+                <span class="badge">✦ Turning Ideas into Reality</span>
+                <h1>Hi, We're <span>Cyber Saffron</span></h1>
+                <h3>Web Development Solutions Agency</h3>
+                <p>We build secure, scalable, and modern digital solutions for startups and businesses — from sleek websites to full-stack SaaS platforms.</p>
+                <div class="hero-btns">
+                    <a href="#contact" class="primary-btn">Get In Touch</a>
+                    <a href="#services" class="secondary-btn">Our Services</a>
+                </div>
+            </div>
+            <div class="hero-right reveal-right">
+                <img src="hero-image.jpg" alt="Cyber Saffron - Digital Solutions">
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         STATS BAR
+    ═══════════════════════════════════════ -->
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat-item reveal">
+                <h3>50+</h3>
+                <p>Projects Delivered</p>
+            </div>
+            <div class="stat-item reveal">
+                <h3>30+</h3>
+                <p>Happy Clients</p>
+            </div>
+            <div class="stat-item reveal">
+                <h3>5+</h3>
+                <p>Years Experience</p>
+            </div>
+            <div class="stat-item reveal">
+                <h3>100%</h3>
+                <p>Client Satisfaction</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         ABOUT
+    ═══════════════════════════════════════ -->
+    <section id="about">
+        <div class="section-wrapper">
+            <div class="about-inner">
+                <div class="about-image-wrap reveal-left">
+                    <img src="hero-image.jpg" alt="About Cyber Saffron">
+                </div>
+                <div class="about-text reveal-right">
+                    <span class="section-label">🚀 About Us</span>
+                    <h2 class="section-title">Building Digital Systems<br>with <span>Precision</span></h2>
+                    <p class="section-subtitle">
+                        Cyber Saffron is focused on creating high-performance digital systems, secure applications, and automation-driven platforms. We combine modern UI design with powerful backend systems to deliver premium technology solutions that truly scale.
+                    </p>
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <div class="v-icon">🔒</div>
+                            <h4>Security First</h4>
+                            <p>Every solution is built with security at its foundation — protecting your data and users.</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="v-icon">⚡</div>
+                            <h4>Performance</h4>
+                            <p>Fast, optimized, scalable systems that grow with your business without slowing down.</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="v-icon">🎯</div>
+                            <h4>Precision</h4>
+                            <p>We pay attention to every detail — from architecture to UI — ensuring quality everywhere.</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="v-icon">🤝</div>
+                            <h4>Partnership</h4>
+                            <p>We work as your long-term partner, not just a vendor. Your success is our success.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ═══════════════════════════════════════
+         SERVICES
+    ═══════════════════════════════════════ -->
+    <section id="services">
+        <div class="section-wrapper">
+            <span class="section-label reveal">⚙️ What We Offer</span>
+            <h2 class="section-title reveal">Our Core <span>Services</span></h2>
+            <p class="section-subtitle reveal">Cutting-edge solutions built for startups and enterprises looking to grow securely and at scale.</p>
+
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="s-icon">🌐</div>
+                    <h3>Website Development</h3>
+                    <p>Responsive, modern, high-performance websites built for growth — from landing pages to enterprise portals.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="s-icon">🛡️</div>
+                    <h3>Cybersecurity Solutions</h3>
+                    <p>Protecting your digital assets with advanced security strategies, threat analysis, and compliance audits.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="s-icon">⚙️</div>
+                    <h3>Custom IT Services</h3>
+                    <p>Tailored technical solutions — from workflow automations to full API integrations designed for your needs.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="s-icon">📈</div>
+                    <h3>Digital Strategy</h3>
+                    <p>Helping startups and enterprises scale with smart online planning, SEO, and data-driven decisions.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="s-icon">📱</div>
+                    <h3>Mobile App Development</h3>
+                    <p>Native and cross-platform Android &amp; iOS apps built for performance, security, and user delight.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="s-icon">☁️</div>
+                    <h3>Cloud &amp; DevOps</h3>
+                    <p>Scalable cloud infrastructure, CI/CD pipelines, and monitoring on AWS and DigitalOcean.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ═══════════════════════════════════════
+         INDUSTRIES
+    ═══════════════════════════════════════ -->
+    <section id="industries">
+        <div class="section-wrapper">
+            <span class="section-label reveal">🏭 Who We Serve</span>
+            <h2 class="section-title reveal">Empowering <span>Industries</span></h2>
+            <p class="section-subtitle reveal">Supporting startups, SMEs, and enterprises across sectors with scalable web solutions and cybersecurity-driven digital transformation.</p>
+
+            <div class="industries-grid">
+                <div class="industry-card reveal">
+                    <div class="i-icon">🚀</div>
+                    <h3>Startups</h3>
+                    <p>Scalable web platforms and secure digital foundations for rapid growth and investor-ready products.</p>
+                </div>
+                <div class="industry-card reveal">
+                    <div class="i-icon">💳</div>
+                    <h3>Finance &amp; FinTech</h3>
+                    <p>Secure and compliant digital systems built for financial services with end-to-end encryption.</p>
+                </div>
+                <div class="industry-card reveal">
+                    <div class="i-icon">🏥</div>
+                    <h3>Healthcare</h3>
+                    <p>Protected patient data systems and modern healthcare web solutions with HIPAA-aware design.</p>
+                </div>
+                <div class="industry-card reveal">
+                    <div class="i-icon">🛍️</div>
+                    <h3>E-Commerce</h3>
+                    <p>High-performance online stores with secure payment integration, optimized for conversions and scale.</p>
+                </div>
+                <div class="industry-card reveal">
+                    <div class="i-icon">🎓</div>
+                    <h3>Education</h3>
+                    <p>Digital learning platforms with secure infrastructure, interactive dashboards, and admin panels.</p>
+                </div>
+                <div class="industry-card reveal">
+                    <div class="i-icon">🏢</div>
+                    <h3>Enterprise IT</h3>
+                    <p>Custom enterprise solutions with advanced cybersecurity, role-based access, and cloud deployments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ═══════════════════════════════════════
+         CONTACT
+    ═══════════════════════════════════════ -->
+    <section id="contact">
+        <div class="section-wrapper">
+            <div class="contact-inner">
+                <!-- Info column -->
+                <div class="contact-info-col reveal-left">
+                    <span class="section-label">📬 Get In Touch</span>
+                    <h2 class="section-title" style="margin-top:12px;">Let's Work <span>Together</span></h2>
+                    <p>Have a project in mind? Need secure web development or cybersecurity solutions? Reach out and let's build something powerful together.</p>
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <span class="c-icon">📧</span>
+                            <div>
+                                <strong>Email Us</strong>
+                                <p>hello@cybersaffron.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="c-icon">📍</span>
+                            <div>
+                                <strong>Location</strong>
+                                <p>Rajkot, Gujarat, India</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="c-icon">⏰</span>
+                            <div>
+                                <strong>Response Time</strong>
+                                <p>Within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form column -->
+                <div class="reveal-right">
+                    <form class="contact-form" id="contactForm" novalidate>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="e.g. rahul@example.com" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Interested In</label>
+                            <select id="service">
+                                <option value="" disabled selected>Select a service...</option>
+                                <option>Website Development</option>
+                                <option>Web App Development</option>
+                                <option>Android App Development</option>
+                                <option>iOS App Development</option>
+                                <option>Cross-Platform App</option>
+                                <option>Cybersecurity Solutions</option>
+                                <option>Cloud &amp; DevOps</option>
+                                <option>Digital Strategy / SEO</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" rows="5" placeholder="Tell us about your project..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message ✉️</button>
+                        <div class="success-msg" id="successMsg">
+                            ✅ Thank you! Your message has been sent. We'll get back to you within 24 hours.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════ -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">Cyber Saffron</div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#industries">Industries</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+        <div class="footer-inner">
+            <p class="footer-copy">© 2026 Cyber Saffron. All Rights Reserved. Built with ❤️ in Rajkot, India.</p>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-top" id="backTop" title="Back to top">↑</button>
+
+    <!-- ═══════════════════════════════════════
+         JAVASCRIPT
+    ═══════════════════════════════════════ -->
+    <script>
+        // ── Hamburger menu ──
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+
+        mobileNav.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+            });
+        });
+
+        // ── Navbar scroll effect ──
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ── Active nav link on scroll ──
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.menu a[data-section]');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.dataset.section === entry.target.id);
+                    });
+                }
+            });
+        }, { threshold: 0.4 });
+
+        sections.forEach(s => observer.observe(s));
+
+        // ── Scroll reveal ──
+        const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    // Stagger siblings
+                    const siblings = entry.target.parentElement.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+                    siblings.forEach((el, idx) => {
+                        if (el === entry.target) {
+                            setTimeout(() => el.classList.add('visible'), idx * 80);
+                        }
+                    });
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // ── Back to top ──
+        const backTop = document.getElementById('backTop');
+        window.addEventListener('scroll', () => {
+            backTop.classList.toggle('show', window.scrollY > 400);
+        });
+        backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // ── Contact form ──
+        const form = document.getElementById('contactForm');
+        const successMsg = document.getElementById('successMsg');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !email || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const btn = form.querySelector('.submit-btn');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                form.reset();
+                successMsg.classList.add('show');
+                btn.textContent = 'Send Message ✉️';
+                btn.disabled = false;
+                setTimeout(() => successMsg.classList.remove('show'), 6000);
+            }, 1200);
+        });
+    </script>
+
+</body>
+</html>
