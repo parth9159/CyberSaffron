@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Saffron | Web Development Solutions</title>
+    <meta name="description" content="Cyber Saffron - Secure, scalable, and modern digital solutions for startups and businesses.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+         :root {
+            --bg-start: #1a0530;
+            --bg-mid: #2f0750;
+            --bg-end: #4a0f6a;
+            --accent: #69c6ff;
+            --accent2: #5aa9ff;
+            --accent3: #7fc3ff;
+            --btn: #3bb4ff;
+            --text: #e6eef9;
+            --muted: #cfdfff;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --card-border: rgba(255, 255, 255, 0.13);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-mid) 40%, var(--bg-end) 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        /* ─────────────────── NAVBAR ─────────────────── */
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(26, 5, 48, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(105, 198, 255, 0.1);
+            transition: background 0.4s;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(26, 5, 48, 0.9);
+        }
+        
+        .nav-inner {
+            max-width: 1200px;
+            margin: auto;
+            padding: 16px clamp(20px, 5%, 60px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-logo {
+            font-size: clamp(20px, 3vw, 30px);
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: clamp(18px, 3vw, 36px);
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: clamp(13px, 1.3vw, 16px);
+            font-weight: 400;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        /* Hamburger */
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--muted);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: rgba(26, 5, 48, 0.97);
+            backdrop-filter: blur(14px);
+            flex-direction: column;
+            z-index: 999;
+            padding: 10px 0 20px;
+            border-bottom: 1px solid rgba(105, 198, 255, 0.1);
+        }
+        
+        .mobile-menu.open {
+            display: flex;
+        }
+        
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 16px;
+            padding: 14px 20px;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            color: var(--accent);
+        }
+        /* ─────────────────── SECTIONS BASE ─────────────────── */
+        
+        section {
+            padding: clamp(80px, 12vh, 130px) clamp(20px, 5%, 60px);
+        }
+        
+        .section-inner {
+            max-width: 1200px;
+            margin: auto;
+        }
+        /* Scroll reveal */
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+        
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+        
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+        
+        .reveal-delay-4 {
+            transition-delay: 0.4s;
+        }
+        
+        .reveal-delay-5 {
+            transition-delay: 0.5s;
+        }
+        
+        .reveal-delay-6 {
+            transition-delay: 0.6s;
+        }
+        /* ─────────────────── HERO (HOME) ─────────────────── */
+        
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: clamp(100px, 14vh, 140px);
+        }
+        
+        .hero-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: clamp(30px, 5vw, 70px);
+            width: 100%;
+        }
+        
+        .hero-left {
+            flex: 1;
+            max-width: 560px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 7px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--accent2);
+            color: var(--accent2);
+            font-size: clamp(11px, 1.1vw, 13px);
+            font-weight: 500;
+            margin-bottom: clamp(16px, 2.5vh, 24px);
+            letter-spacing: 0.5px;
+        }
+        
+        .hero-left h1 {
+            font-size: clamp(32px, 5.5vw, 62px);
+            font-weight: 800;
+            line-height: 1.12;
+            margin-bottom: clamp(10px, 1.5vh, 16px);
+        }
+        
+        .hero-left h1 span {
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-left h3 {
+            font-size: clamp(15px, 1.9vw, 22px);
+            font-weight: 400;
+            color: var(--muted);
+            margin-bottom: clamp(10px, 1.5vh, 18px);
+        }
+        
+        .hero-left p {
+            font-size: clamp(13px, 1.2vw, 16px);
+            opacity: 0.8;
+            line-height: 1.75;
+            margin-bottom: clamp(22px, 3.5vh, 36px);
+            max-width: 480px;
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            padding: clamp(11px, 1.5vh, 15px) clamp(24px, 2.5vw, 34px);
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
+            color: #1a0530;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: clamp(13px, 1.2vw, 15px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 28px rgba(90, 169, 255, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 36px rgba(90, 169, 255, 0.55);
+        }
+        
+        .hero-right {
+            flex-shrink: 0;
+        }
+        
+        .hero-right img {
+            width: clamp(240px, 32vw, 460px);
+            height: auto(240px, 32vw, 460px);
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+        }
+        /* Stats row */
+        
+        .stats-row {
+            display: flex;
+            gap: clamp(20px, 4vw, 48px);
+            margin-top: clamp(30px, 5vh, 50px);
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: left;
+        }
+        
+        .stat-item .num {
+            font-size: clamp(24px, 3vw, 36px);
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        
+        .stat-item .label {
+            font-size: clamp(11px, 1vw, 13px);
+            color: var(--muted);
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        /* Divider */
+        
+        .section-divider {
+            max-width: 1200px;
+            margin: 0 auto;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(105, 198, 255, 0.2), transparent);
+        }
+        /* ─────────────────── SECTION HEADERS ─────────────────── */
+        
+        .section-tag {
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 50px;
+            background: rgba(105, 198, 255, 0.08);
+            border: 1px solid rgba(105, 198, 255, 0.2);
+            font-size: clamp(11px, 1.1vw, 12px);
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: clamp(14px, 2vh, 20px);
+        }
+        
+        .section-title {
+            font-size: clamp(26px, 4vw, 46px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: clamp(12px, 1.8vh, 18px);
+        }
+        
+        .section-title span {
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-desc {
+            font-size: clamp(13px, 1.2vw, 16px);
+            opacity: 0.78;
+            line-height: 1.8;
+            max-width: 640px;
+        }
+        /* ─────────────────── ABOUT ─────────────────── */
+        
+        #about {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        
+        .about-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(40px, 6vw, 80px);
+            align-items: center;
+        }
+        
+        .about-left {}
+        
+        .about-right {}
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(14px, 2vw, 20px);
+            margin-top: clamp(24px, 3.5vh, 36px);
+        }
+        
+        .value-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: clamp(18px, 2.5vh, 26px) clamp(16px, 2vw, 22px);
+            transition: transform 0.3s, background 0.3s;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            background: rgba(105, 198, 255, 0.08);
+        }
+        
+        .value-card .icon {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        
+        .value-card h4 {
+            font-size: clamp(13px, 1.2vw, 15px);
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        
+        .value-card p {
+            font-size: clamp(11px, 1vw, 13px);
+            opacity: 0.72;
+            line-height: 1.6;
+        }
+        
+        .mission-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-left: 3px solid var(--accent);
+            border-radius: 18px;
+            padding: clamp(22px, 3vh, 32px) clamp(20px, 2.5vw, 30px);
+            margin-top: clamp(20px, 3vh, 30px);
+        }
+        
+        .mission-box h4 {
+            font-size: clamp(15px, 1.5vw, 18px);
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .mission-box p {
+            font-size: clamp(13px, 1.1vw, 15px);
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+        /* ─────────────────── SERVICES ─────────────────── */
+        
+        #services {}
+        
+        .services-header {
+            margin-bottom: clamp(36px, 5vh, 56px);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(16px, 2.5vw, 28px);
+        }
+        
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            padding: clamp(24px, 3.5vh, 34px) clamp(20px, 2.5vw, 28px);
+            transition: transform 0.3s, background 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-7px);
+            background: rgba(105, 198, 255, 0.07);
+            border-color: rgba(105, 198, 255, 0.25);
+        }
+        
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        
+        .service-card .icon {
+            font-size: clamp(30px, 3.5vw, 38px);
+            margin-bottom: clamp(12px, 1.8vh, 18px);
+        }
+        
+        .service-card h3 {
+            font-size: clamp(15px, 1.5vw, 18px);
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .service-card p {
+            font-size: clamp(12px, 1.1vw, 14px);
+            opacity: 0.75;
+            line-height: 1.7;
+        }
+        /* ─────────────────── INDUSTRIES ─────────────────── */
+        
+        #industries {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        
+        .industries-header {
+            margin-bottom: clamp(36px, 5vh, 56px);
+        }
+        
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: clamp(16px, 2.5vw, 28px);
+        }
+        
+        .industry-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            padding: clamp(24px, 3.5vh, 34px) clamp(20px, 2.5vw, 28px);
+            transition: transform 0.3s, background 0.3s, border-color 0.3s;
+        }
+        
+        .industry-card:hover {
+            transform: translateY(-6px);
+            background: rgba(105, 198, 255, 0.07);
+            border-color: rgba(105, 198, 255, 0.25);
+        }
+        
+        .industry-card .icon {
+            font-size: clamp(28px, 3.5vw, 36px);
+            margin-bottom: clamp(12px, 1.5vh, 16px);
+        }
+        
+        .industry-card h3 {
+            font-size: clamp(15px, 1.5vw, 18px);
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        
+        .industry-card p {
+            font-size: clamp(12px, 1.1vw, 14px);
+            opacity: 0.75;
+            line-height: 1.7;
+        }
+        /* ─────────────────── CONTACT ─────────────────── */
+        
+        #contact {}
+        
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: clamp(40px, 6vw, 80px);
+            align-items: start;
+        }
+        
+        .contact-info-side h2 {
+            font-size: clamp(24px, 3.5vw, 40px);
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 16px;
+        }
+        
+        .contact-info-side h2 span {
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .contact-info-side p {
+            font-size: clamp(13px, 1.2vw, 15px);
+            opacity: 0.78;
+            line-height: 1.8;
+            margin-bottom: clamp(24px, 4vh, 40px);
+        }
+        
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        
+        .contact-item .ci-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(105, 198, 255, 0.1);
+            border: 1px solid rgba(105, 198, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .contact-item .ci-text span {
+            display: block;
+            font-size: 11px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 2px;
+        }
+        
+        .contact-item .ci-text strong {
+            font-size: clamp(13px, 1.1vw, 15px);
+            font-weight: 500;
+        }
+        
+        .contact-form-side {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: clamp(28px, 4vh, 44px) clamp(24px, 3vw, 40px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: clamp(14px, 2.2vh, 20px);
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: clamp(11px, 1vw, 13px);
+            color: var(--muted);
+            margin-bottom: 7px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: clamp(10px, 1.5vh, 14px) clamp(12px, 1.5vw, 16px);
+            border-radius: 12px;
+            border: 1px solid rgba(105, 198, 255, 0.18);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            font-size: clamp(13px, 1.2vw, 15px);
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(230, 238, 249, 0.35);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+            background: rgba(105, 198, 255, 0.06);
+        }
+        
+        .form-group select option {
+            background: #2a004f;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(12px, 2vw, 18px);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: clamp(12px, 1.8vh, 16px) 24px;
+            border-radius: 50px;
+            background: var(--btn);
+            color: white;
+            font-size: clamp(14px, 1.3vw, 16px);
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 25px rgba(105, 198, 255, 0.35);
+            margin-top: 4px;
+        }
+        
+        .submit-btn:hover {
+            background: transparent;
+            border-color: var(--btn);
+            color: var(--btn);
+            box-shadow: none;
+        }
+        
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 14px 18px;
+            border-radius: 12px;
+            background: rgba(105, 198, 255, 0.09);
+            border: 1px solid rgba(105, 198, 255, 0.28);
+            color: var(--accent);
+            font-size: 14px;
+            margin-top: 14px;
+        }
+        
+        .success-msg.show {
+            display: block;
+        }
+        /* ─────────────────── FOOTER ─────────────────── */
+        
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        
+        footer p {
+            font-size: clamp(11px, 1vw, 13px);
+            opacity: 0.55;
+        }
+        /* ─────────────────── SCROLL TO TOP ─────────────────── */
+        
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 28px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--btn);
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            box-shadow: 0 6px 20px rgba(59, 180, 255, 0.4);
+            z-index: 800;
+        }
+        
+        .scroll-top.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-3px);
+        }
+        /* ─────────────────── RESPONSIVE ─────────────────── */
+        
+        @media (max-width: 900px) {
+            .about-wrap,
+            .contact-wrap {
+                grid-template-columns: 1fr;
+            }
+            .hero-wrap {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-left {
+                max-width: 100%;
+            }
+            .hero-left p {
+                max-width: 100%;
+            }
+            .stats-row {
+                justify-content: center;
+            }
+            .stat-item {
+                text-align: center;
+            }
+            .hero-right img {
+                width: clamp(220px, 65vw, 340px);
+                height: clamp(220px, 65vw, 340px);
+            }
+            .values-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-left h1 {
+                font-size: 28px;
+            }
+        }
+        /* Glow orb decorative elements */
+        
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            opacity: 0.12;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════════════ NAVBAR ═══════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#home" class="nav-logo">CYBER SAFFRON</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#industries">Industries</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#industries">Industries</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- ═══════════════ HOME ═══════════════ -->
+    <section id="home">
+        <div class="section-inner">
+            <div class="hero-wrap">
+                <div class="hero-left">
+                    <span class="badge reveal">✦ Turning Ideas into Reality</span>
+                    <h1 class="reveal reveal-delay-1">Hi, We're <span>Cyber Saffron</span></h1>
+                    <h3 class="reveal reveal-delay-2">Web Development Solutions Partners</h3>
+                    <p class="reveal reveal-delay-3">From idea to launch — we craft powerful digital solutions designed for growth, security, and long-term success.</p>
+                    <a href="#contact" class="btn-primary reveal reveal-delay-4">Get In Touch</a>
+                    <div class="stats-row reveal reveal-delay-5">
+                        <div class="stat-item">
+                            <div class="num"></div>
+                            <div class="label">100% On-Time Completion</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="num"></div>
+                            <div class="label">Speed Optimized Projects</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="num"></div>
+                            <div class="label">Results That Scale</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-right reveal reveal-delay-3">
+                    <img src="https://i.pinimg.com/736x/14/18/c3/1418c3d8765931a1b8edd348869f2ae1.jpg" alt="Cyber Saffron">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ═══════════════ ABOUT ═══════════════ -->
+    <section id="about">
+        <div class="section-inner">
+            <div class="about-wrap">
+                <div class="about-left">
+                    <span class="section-tag reveal">🚀 About Us</span>
+                    <h2 class="section-title reveal reveal-delay-1">Building Digital Systems with <span>Precision</span></h2>
+                    <p class="section-desc reveal reveal-delay-2">
+                        At Cyber Saffron, we develop performance-driven digital platforms that help businesses scale securely and efficiently. Our approach combines modern design aesthetics with strong technical foundations to create impactful digital products.
+                    </p>
+                    <div class="mission-box reveal reveal-delay-3">
+                        <h4>Our Mission</h4>
+                        <p>To empower businesses with secure, scalable, and automation-powered digital solutions that accelerate growth, enhance efficiency, and transform complexity into seamless digital experiences.</p>
+                    </div>
+                </div>
+                <div class="about-right">
+                    <div class="values-grid">
+                        <div class="value-card reveal reveal-delay-1">
+                            <div class="icon">🛡️</div>
+                            <h4>Security First</h4>
+                            <p>Every solution built with security at its foundation, protecting your data and users.</p>
+                        </div>
+                        <div class="value-card reveal reveal-delay-2">
+                            <div class="icon">🚀</div>
+                            <h4>Performance</h4>
+                            <p>Fast, optimized, scalable systems that grow with your business without slowing down.</p>
+                        </div>
+                        <div class="value-card reveal reveal-delay-3">
+                            <div class="icon">📐</div>
+                            <h4>Precision</h4>
+                            <p>Attention to every detail — from architecture to UI — ensuring quality at every layer.</p>
+                        </div>
+                        <div class="value-card reveal reveal-delay-4">
+                            <div class="icon">🔗</div>
+                            <h4>Partnership</h4>
+                            <p>We work as your long-term partner, not just a vendor. Your success is our success.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ═══════════════ SERVICES ═══════════════ -->
+    <section id="services">
+        <div class="section-inner">
+            <div class="services-header" style="text-align:center;">
+                <span class="section-tag reveal">⚙️ What We Offer</span>
+                <h2 class="section-title reveal reveal-delay-1" style="max-width:600px;margin:0 auto 14px;">Our Core <span>Services</span></h2>
+                <p class="section-desc reveal reveal-delay-2" style="margin:0 auto;">Cutting-edge web development, cybersecurity, and IT services tailored for startups and enterprises looking to grow online securely.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal reveal-delay-1">
+                    <div class="icon">🌐</div>
+                    <h3>Website Development</h3>
+                    <p>Responsive, modern, and high-performance websites built for growth — from landing pages to enterprise portals.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-2">
+                    <div class="icon">🛡️</div>
+                    <h3>Cybersecurity Solutions</h3>
+                    <p>Protecting your digital assets with advanced security strategies, threat analysis, and compliance audits.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-3">
+                    <div class="icon">⚙️</div>
+                    <h3>Custom IT Services</h3>
+                    <p>Tailored technical solutions designed for your business — automations, custom software, and API integrations.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-4">
+                    <div class="icon">📈</div>
+                    <h3>Digital Strategy</h3>
+                    <p>Helping startups and enterprises scale with smart online planning, SEO, and data-driven growth decisions.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-5">
+                    <div class="icon">📱</div>
+                    <h3>Mobile App Development</h3>
+                    <p>Native and cross-platform Android & iOS apps built for performance, security, and seamless UX.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-6">
+                    <div class="icon">☁️</div>
+                    <h3>Cloud & DevOps</h3>
+                    <p>Scalable cloud infrastructure, CI/CD pipelines, and cloud monitoring on AWS and DigitalOcean.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ═══════════════ INDUSTRIES ═══════════════ -->
+    <section id="industries">
+        <div class="section-inner">
+            <div class="industries-header" style="text-align:center;">
+                <span class="section-tag reveal">🏭 Who We Serve</span>
+                <h2 class="section-title reveal reveal-delay-1" style="max-width:600px;margin:0 auto 14px;">Empowering <span>Industries</span></h2>
+                <p class="section-desc reveal reveal-delay-2" style="margin:0 auto;">Supporting startups, SMEs, and enterprises across sectors with scalable web solutions and cybersecurity-driven digital transformation.</p>
+            </div>
+            <div class="industries-grid" style="margin-top:clamp(36px,5vh,56px);">
+                <div class="industry-card reveal reveal-delay-1">
+                    <div class="icon">🚀</div>
+                    <h3>Startups</h3>
+                    <p>Scalable platforms and secure digital foundations for rapid growth and investor-ready products.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-2">
+                    <div class="icon">💳</div>
+                    <h3>Finance & FinTech</h3>
+                    <p>Secure, compliant digital systems built for financial services with end-to-end encryption.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-3">
+                    <div class="icon">🏥</div>
+                    <h3>Healthcare</h3>
+                    <p>Protected patient data systems and modern healthcare platforms with privacy-aware design.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-4">
+                    <div class="icon">🛍️</div>
+                    <h3>E-Commerce</h3>
+                    <p>High-performance online stores with secure payment integration, optimized for conversions.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-5">
+                    <div class="icon">🎓</div>
+                    <h3>Education</h3>
+                    <p>Digital learning platforms with secure infrastructure, dashboards, and easy content management.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-6">
+                    <div class="icon">🏢</div>
+                    <h3>Enterprise IT</h3>
+                    <p>Custom enterprise solutions with advanced cybersecurity, role-based access, and cloud deployments.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-6">
+                    <div class="icon">🏗️</div>
+                    <h3>Real Estate</h3>
+                    <p>Property management platforms, real estate portals, CRM systems, and secure document workflows for brokers and developers.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-6">
+                    <div class="icon">🏋️</div>
+                    <h3>Fitness & Wellness</h3>
+                    <p>Membership platforms, mobile apps, booking systems, and digital health tracking dashboards.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-6">
+                    <div class="icon">📺</div>
+                    <h3>Media & Entertainment</h3>
+                    <p>Content platforms, streaming systems, secure user management, and scalable media applications.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-6">
+                    <div class="icon">🏭</div>
+                    <h3>Manufacturing</h3>
+                    <p>ERP systems, production monitoring dashboards, automation tools, and secure internal enterprise software.</p>
+                </div>
+                <div class="industry-card reveal reveal-delay-6">
+                    <div class="icon">🚚</div>
+                    <h3>Logistics & Supply Chain</h3>
+                    <p>Tracking systems, fleet management software, warehouse dashboards, and automation tools for operational efficiency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ═══════════════ CONTACT ═══════════════ -->
+    <section id="contact">
+        <div class="section-inner">
+            <div class="contact-wrap">
+                <div class="contact-info-side">
+                    <span class="section-tag reveal">📬 Get In Touch</span>
+                    <h2 class="reveal reveal-delay-1">Let's Work <span>Together</span></h2>
+                    <p class="reveal reveal-delay-2">From concept to deployment, I deliver web solutions engineered for performance and built with security at the core. Let's make it happen.</p>
+                    <div class="contact-items reveal reveal-delay-3">
+                        <div class="contact-item">
+                            <div class="ci-icon">📧</div>
+                            <div class="ci-text">
+                                <span>Email</span>
+                                <strong>cybersaffron@gmail.com</strong>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="ci-icon">📍</div>
+                            <div class="ci-text">
+                                <span>Location</span>
+                                <strong>Rajkot, Gujarat, India</strong>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="ci-icon">⏰</div>
+                            <div class="ci-text">
+                                <span>Response Time</span>
+                                <strong>Within 3-4 hours</strong>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="ci-icon">💬</div>
+                            <div class="ci-text">
+                                <span>WhatsApp / Call</span>
+                                <strong>+91 93163 48389</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-side reveal reveal-delay-2">
+                    <form id="contactForm" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Your Name</label>
+                                <input type="text" id="fname" placeholder="e.g. Rahul Sharma" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="femail" placeholder="rahul@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Service Interested In</label>
+                            <select id="fservice">
+                                <option value="" disabled selected>Select a service...</option>
+                                <option>Website Development</option>
+                                <option>Web App Development</option>
+                                <option>Android App Development</option>
+                                <option>iOS App Development</option>
+                                <option>Cross-Platform App</option>
+                                <option>Cloud & DevOps</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Your Message</label>
+                            <textarea id="fmessage" placeholder="Tell us about your project, budget, timeline..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message →</button>
+                        <div class="success-msg" id="successMsg">
+                            ✅ Message sent! We'll get back to you within 24 hours.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer>
+        <p>© 2026 Cyber Saffron. All Rights Reserved. | Built with ❤️ in Rajkot, India</p>
+    </footer>
+
+    <!-- Scroll to top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+    <script>
+        // ── Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // ── Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ── Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navAnchors = document.querySelectorAll('.nav-links a');
+
+        const observerNav = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navAnchors.forEach(a => a.classList.remove('active'));
+                    const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+                    if (active) active.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.4
+        });
+
+        sections.forEach(s => observerNav.observe(s));
+
+        // ── Scroll reveal
+        const revealEls = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12
+        });
+
+        revealEls.forEach(el => revealObserver.observe(el));
+
+        // ── Scroll to top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('show', window.scrollY > 400);
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ── Contact form
+        const form = document.getElementById('contactForm');
+        const successMsg = document.getElementById('successMsg');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('fname').value.trim();
+            const email = document.getElementById('femail').value.trim();
+            const message = document.getElementById('fmessage').value.trim();
+
+            if (!name || !email || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const btn = form.querySelector('.submit-btn');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                form.reset();
+                successMsg.classList.add('show');
+                btn.textContent = 'Send Message →';
+                btn.disabled = false;
+                setTimeout(() => successMsg.classList.remove('show'), 6000);
+            }, 1200);
+        });
+    </script>
+</body>
+
+</html>
